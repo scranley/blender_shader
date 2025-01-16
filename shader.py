@@ -34,7 +34,7 @@ def create_hello_world_shader(tile_path):
     return mat
 
 # Path to the bricks.png tile (ensure this path is correct)
-tile_path = "customtiles/brick.png"  # Replace with the actual path to bricks.png
+tile_path = "brick.png"  # Replace with the actual path to bricks.png
 
 # Create the shader and assign it to the active object
 if bpy.context.object:
