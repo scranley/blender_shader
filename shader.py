@@ -1,6 +1,6 @@
 import bpy
 
-def create_hello_world_shader():
+def create_hello_world_shader(tile_path):
     # Create a new material
     mat = bpy.data.materials.new(name="HelloWorldShader")
     mat.use_nodes = True  # Enable nodes
@@ -20,24 +20,9 @@ def create_hello_world_shader():
     text_node = nodes.new(type="ShaderNodeTexImage")
     text_node.location = (0, 0)
 
-    # Create a text object texture
-    img = bpy.data.images.new("HelloWorldText", width=512, height=512)
-    img.generated_type = 'BLANK'
+    # Load the bricks.png image as the texture
+    img = bpy.data.images.load(tile_path)
 
-    # Draw "Hello World" on the image
-    import bpy_extras
-    import bgl
-    import gpu
-    from gpu_extras.batch import batch_for_shader
-
-    # Set the font size and draw text on the image
-    text = "Hello World"
-    font_size = 50
-    color = (1, 1, 1, 1)  # White
-
-    # Clear the image
-    img.pixels = [0] * len(img.pixels)
-    
     # Assign image to the text node
     text_node.image = img
 
@@ -48,14 +33,17 @@ def create_hello_world_shader():
 
     return mat
 
+# Path to the bricks.png tile (ensure this path is correct)
+tile_path = "customtiles/brick.png"  # Replace with the actual path to bricks.png
+
 # Create the shader and assign it to the active object
 if bpy.context.object:
     obj = bpy.context.object
-    mat = create_hello_world_shader()
-    
+    mat = create_hello_world_shader(tile_path)
+
     if len(obj.data.materials) == 0:
         obj.data.materials.append(mat)
     else:
         obj.data.materials[0] = mat
 
-print("Hello World Shader created!")
+print("Hello World Shader with bricks.png applied!")
